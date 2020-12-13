@@ -19,3 +19,5 @@ This can be tested by using different browser windows or tabs
 Data
 - All data is saved to the local json file found in src/main/resources/tasks.json
 
+Unit tests
+- Tests for the controller requests are provided under test directory
