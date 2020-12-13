@@ -1,5 +1,11 @@
+Info
+ - taskApp
+ - Made by Ott Kask
+ - Developed by using Intellij IDEA, Maven and Vue.js
+
 Instructions
 - Download the project
+- If necessary, resolve maven dependencies
 - Run the application from DemoApplication
 - Open multiple browser windows and go to "localhost:8080/"
 - Note: The built Vue package is included to the project.
