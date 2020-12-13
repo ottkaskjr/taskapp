@@ -15,6 +15,17 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.UUID;
 
+/** Service class that handles all the data manipulation
+ *
+ * getTasks() - returns all tasks from tasks.json
+ * getTask(String id) - returns a task by a provided id from tasks.json
+ * createTask(TaskCreator taskCreator) creates a new task
+ * removeTaskJSON(UUID id) - reads tasks.json and removes a task by a provided id
+ * readTasksJSON() - reads tasks.json and returns all tasks as a List
+ * readTaskByIdJSON() - reads tasks.json and returns a task by id
+ * addTaskJSON() - reads tasks.json and writes a new task to the file
+ */
+
 @Service
 public class TaskService {
 
@@ -29,13 +40,9 @@ public class TaskService {
     public TaskEntity createTask(TaskCreator taskCreator) {
         String task = taskCreator.getTask();
         Long deadline = taskCreator.getDeadline();
-        //SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        //String strDate= formatter.format(date);
         TaskEntity taskEntity = new TaskEntity(task, deadline);
 
         return addTaskJSON(taskEntity);
-
-        /* read here and get list */
     }
 
     public String removeTaskJSON(UUID uuid){
@@ -44,13 +51,11 @@ public class TaskService {
         try(FileReader reader = new FileReader("src/main/resources/tasks.json")){
             Object obj = jsonParser.parse(reader);
             JSONArray taskArray = (JSONArray) obj;
-            boolean taskFound = false;
             for(int i = taskArray.size()-1; i >= 0; i--){
                 JSONObject task = (JSONObject) taskArray.get(i);
                 String taskId = (String) task.get("id");
                 if(taskId.equals(id)){
                     taskArray.remove(i);
-                    taskFound = true;
                     break;
                 }
             }
@@ -78,30 +83,19 @@ public class TaskService {
         JSONParser jsonParser = new JSONParser();
         try(FileReader reader = new FileReader("src/main/resources/tasks.json")){
             Object obj = jsonParser.parse(reader);
-            //System.out.println(obj);
             JSONArray tasksArray = (JSONArray) obj;
 
-            //System.out.println(tasksArray.size());
+            //for(int i = 0; i < tasksArray.size(); i++){
 
-            for(int i = 0; i < tasksArray.size(); i++){
-                //System.out.println(tasksArray.get(i));
-
-                //Get employee object within list
-                JSONObject task = (JSONObject) tasksArray.get(i);
-                String taskId = (String) task.get("id");
-                UUID taskUUID = UUID.fromString(taskId);
-                String taskBody = (String) task.get("task");
-                String taskCreatedAt = (String) task.get("createdAt");
-                String taskDeadline = (String) task.get("deadline");
-                //System.out.println(taskUUID);
-                //System.out.println(taskBody);
-                //System.out.println(taskCreatedAt);
-                //System.out.println(taskDeadline);
-            }
+                //JSONObject task = (JSONObject) tasksArray.get(i);
+                //String taskId = (String) task.get("id");
+                //UUID taskUUID = UUID.fromString(taskId);
+                //String taskBody = (String) task.get("task");
+                //String taskCreatedAt = (String) task.get("createdAt");
+                //String taskDeadline = (String) task.get("deadline");
+            //}
 
             return tasksArray;
-            //Iterate over employee array
-            //employeeList.forEach( emp -> parseEmployeeObject( (JSONObject) emp ) );
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -151,7 +145,6 @@ public class TaskService {
 
         JSONArray taskArray = readTasksJSON();
         taskArray.add(taskDetails);
-        //System.out.println(taskArray);
 
         //Write JSON file
         try (FileWriter file = new FileWriter("src/main/resources/tasks.json")) {

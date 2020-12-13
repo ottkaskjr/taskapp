@@ -2,16 +2,17 @@ package com.example.demo.controller;
 
 import com.example.demo.service.TaskService;
 import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.Date;
 import java.util.UUID;
+
+/** Class containing all the server request endpoints
+ *
+ * getTasks() - returns all tasks from tasks.json
+ * getTask(String id) - returns a task by a provided id
+ * addTask(TaskCreator taskCreator) creates a new task
+ * removeTask(UUID id) - removes a task by a provided id
+ */
 
 @CrossOrigin
 @RestController
